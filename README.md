@@ -11,11 +11,12 @@ We propose **LaVIT**, a new general-purpose multi-modal foundation model that in
 </div><br/>
 
 
-After pre-training, LaVIT can serve as a multi-modal generalist to perform both multi-modal comprehension and generation without further fine-tuning. Specifically, it has the following capabilities
+After pre-training, LaVIT can serve as a multi-modal generalist to perform both multi-modal comprehension and generation without further fine-tuning. Specifically, it has the following capabilities:
+
 * read image contents and answer the questions.
 
 <div align="center">
-  <img src="assets/understanding.jpg"/>
+  <img src="assets/understanding.png"/>
 </div><br/>
 
 * Text-to-image creation.
