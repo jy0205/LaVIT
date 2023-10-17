@@ -148,9 +148,9 @@ The pretrained weight of LaVIT can be found on the huggingface from [here](https
     <td>-</td>
     <td>103.9</td>
     <td>71.6</td>
-    <td>65.0</td>
-    <td>45.9</td>
-    <td>61.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>32.3</td>
     <td>19.6</td>
   </tr>
   <tr>
@@ -284,7 +284,7 @@ The pretrained weight of LaVIT can be found on the huggingface from [here](https
 </table>
 
 ## Usage
-LaVIT can serve as a multi-modal generalist to perform both multi-modal comprehension and generation. Below, we provide some example. Only a few lines of codes are needed to use **LaVIT** for inference. We also provide the detailed examples in the jupyter notebooks: `understanding.ipynb` and `generation.ipynb`. You can refer them for learning how to interact with LaVIT.
+LaVIT can serve as a multi-modal generalist to perform both multi-modal comprehension and generation. Below, we provide some example. Only a few lines of codes are needed to use **LaVIT** for inference. We also provide the detailed examples in the jupyter notebooks: `understanding.ipynb` and `generation.ipynb`. You can refer them for learning how to interact with LaVIT. 
 
 ### Multi-modal Understanding
 
@@ -299,7 +299,8 @@ from PIL import Image
 random.seed(42)
 torch.manual_seed(42)
 
-# The local directory you save the LaVIT pre-trained weight
+# The local directory you save the LaVIT pre-trained weight, 
+# it will automatically download the checkpoint from huggingface
 model_path = '/path/LaVIT_weight'
 
 # Using BFloat16 during inference
@@ -342,7 +343,8 @@ from PIL import Image
 
 torch.manual_seed(42)
 
-# The local directory you save the LaVIT pre-trained weight
+# The local directory you save the LaVIT pre-trained weight, 
+# it will automatically download the checkpoint from huggingface
 model_path = '/path/LaVIT_weight'
 
 # Using BFloat16 during inference
