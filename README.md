@@ -1,5 +1,5 @@
 # LaVIT: Unified Language-Vision Pretraining in LLM with Dynamic Discrete Visual Tokenization
-This is the official repository for the multi-modal large langauge model: **LaVIT**.
+This is the official repository for the multi-modal large language model: **LaVIT**.
 
 [[`arXiv`](https://arxiv.org/abs/2309.04669)] [[`BibTeX`](#Citing)]
 
@@ -7,7 +7,7 @@ This is the official repository for the multi-modal large langauge model: **LaVI
 * ```2023.10.17``` 🚀🚀🚀  We release the pre-trained weight for **LaVIT** on the HuggingFace and provide the inference code of using it for both multi-modal understanding and generation.
 
 ## Introduction
-We propose **LaVIT**, a new general-purpose multi-modal foundation model that inherits the successful learning paradigm of LLM: predicting the next image / text token in an auto-regressive manner. LaVIT introduce a well-designed visual tokenizer to translate the non-linguistic image into a sequence of discrete tokens like a foreign language that LLM can read. Hence, both images and texts can be handled simultaneously under the unified generative objective. For more technical details, please refer to our [paper](https://arxiv.org/abs/2309.04669).
+We propose **LaVIT**, a new general-purpose multi-modal foundation model that inherits the successful learning paradigm of LLM: predicting the next image / text token in an auto-regressive manner. LaVIT introduces a well-designed visual tokenizer to translate the non-linguistic image into a sequence of discrete tokens like a foreign language that LLM can read. Hence, both images and texts can be handled simultaneously under the unified generative objective. For more technical details, please refer to our [paper](https://arxiv.org/abs/2309.04669).
 
 <div align="center">
   <img src="assets/pipeline.png"/>
@@ -51,7 +51,7 @@ pip install -r requirements.txt
 We release the LaVIT weight that is built upon [Llama-2-7B](https://huggingface.co/meta-llama/Llama-2-7b) as the large language model.
 > Note: Due to the license restrictions of Llama1, we cannot publish its weights. Thus, we release the weight of LaVIT based on the Llama2.
 
-The pretrained weight of LaVIT can be found on the huggingface from [here](https://huggingface.co/rain1011/LaVIT-7B-v1), which will take around 22GB disk space. LaVIT achieves the state-of-the-arts performance on various multi-modal downstream tasks. The detailed quantitive results are shown as follows:
+The pre-trained weight of LaVIT can be found on the huggingface from [here](https://huggingface.co/rain1011/LaVIT-7B-v1), which will take around 22GB of disk space. LaVIT achieves state-of-the-arts performance on various multi-modal downstream tasks. The detailed quantitive results are shown as follows:
 
 #### Zero-shot Multi-modal Understanding
 
@@ -284,7 +284,7 @@ The pretrained weight of LaVIT can be found on the huggingface from [here](https
 </table>
 
 ## Usage
-LaVIT can serve as a multi-modal generalist to perform both multi-modal comprehension and generation. Below, we provide some example. Only a few lines of codes are needed to use **LaVIT** for inference. We also provide the detailed examples in the jupyter notebooks: `understanding.ipynb` and `generation.ipynb`. You can refer them for learning how to interact with LaVIT. 
+LaVIT can serve as a multi-modal generalist to perform both multi-modal comprehension and generation. Below, we provide some examples. Only a few lines of code are needed to use **LaVIT** for inference. We also provide the detailed examples in the jupyter notebooks: `understanding.ipynb` and `generation.ipynb`. You can refer them for learning how to interact with LaVIT. 
 
 ### Multi-modal Understanding
 
@@ -332,7 +332,7 @@ print("The answer is: ", answer)
 
 ### Multi-modal generation
 
-For the Image generation, the Classifier-Free Guidance scale is important. A larger scale will encourage the model to generate samples highly related to the input prompt while sacrificing the image quality. We recommend to set `guidance_scale_for_llm=3.0` by default, you can increase this scale (e.g., 4.0 or 5.0) for encouraging the generated image to follow the semantics of given prompts.
+For the Image generation, the Classifier-Free Guidance scale is important. A larger scale will encourage the model to generate samples highly related to the input prompt while sacrificing the image quality. We recommend setting `guidance_scale_for_llm=3.0` by default, you can increase this scale (e.g., 4.0 or 5.0) to encourage the generated image to follow the semantics of given prompts.
 
 ```python
 import os
