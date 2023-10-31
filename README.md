@@ -1,10 +1,13 @@
 # LaVIT: Unified Language-Vision Pretraining in LLM with Dynamic Discrete Visual Tokenization
 This is the official repository for the multi-modal large language model: **LaVIT**.
 
+
 [[`arXiv`](https://arxiv.org/abs/2309.04669)] [[`BibTeX`](#Citing)]
 
 ## News and Updates
 * ```2023.10.17``` 🚀🚀🚀  We release the pre-trained weight for **LaVIT** on the HuggingFace and provide the inference code of using it for both multi-modal understanding and generation.
+
+* ```2023.10.31``` 🌟🌟🌟 We update the high-resolution pixel decoder in **LaVIT**, which supports to generate high resolution (1024 * 1024 pixels), muliple aspect ratios (1:1, 4:3, 3:2, 16:9 ...) and high aesthetics images. The quality of generated images have been improved siginificantly.
 
 ## Introduction
 We propose **LaVIT**, a new general-purpose multi-modal foundation model that inherits the successful learning paradigm of LLM: predicting the next image / text token in an auto-regressive manner. LaVIT introduces a well-designed visual tokenizer to translate the non-linguistic image into a sequence of discrete tokens like a foreign language that LLM can read. Hence, both images and texts can be handled simultaneously under the unified generative objective. For more technical details, please refer to our [paper](https://arxiv.org/abs/2309.04669).
@@ -17,22 +20,35 @@ We propose **LaVIT**, a new general-purpose multi-modal foundation model that in
 After pre-training, LaVIT can serve as a multi-modal generalist to perform both multi-modal comprehension and generation without further fine-tuning. Specifically, it has the following capabilities:
 
 * Read image contents and answer the questions.
-
-<div align="center">
-  <img src="assets/understanding.png"/>
-</div><br/>
-
 * Text-to-image creation.
+* Image synthesis via Multi-modal Prompt.
+
+## Examples
+
+### High Quality Text-to-Image Creation. 
+LaVIT can synthesis **high quality (up to 1024 * 1024)**, **muliple aspect ratios**, and **high aesthetics** images based on the given image prompt, whose image generation ablility is competitive with state-of-the-art image generators (Parti, SDXL, and DALLE-3). The following are some examples.
 
 <div align="center">
   <img src="assets/text2image.png"/>
 </div><br/>
 
-* Image synthesis via Multi-modal Prompt.
+
+### Image synthesis via Multi-modal Prompt. 
+
+Since both image and text are unified as discrete tokens in LLM, **LaVIT** can accept several modality combinations (e.g., text, image+text, image+image) as prompt to generate corresponding images without any fine-tuning.
 
 <div align="center">
   <img src="assets/multi_modal.png"/>
 </div><br/>
+
+### Read image contents and answer the questions.
+
+Given the input images, LaVIT can read the image content and understand its semantics. For example, our model can give the caption for input image and answer the corresponding questions.
+
+<div align="center">
+  <img src="assets/understanding.png"/>
+</div><br/>
+
 
 ## Setup
 
@@ -46,6 +62,8 @@ git clone https://github.com/jy0205/LaVIT.git
 cd LaVIT
 pip install -r requirements.txt
 ```
+
+* (Optional) We recommend to use memory efficient attention by installing xFormers following the instructions in [here](https://huggingface.co/docs/diffusers/main/en/optimization/xformers). Then, you can set the argument `use_xformers=True` in `build_model` function  to save the GPU memory and speed up inference.
 
 ### Model Zoo
 We release the LaVIT weight that is built upon [Llama-2-7B](https://huggingface.co/meta-llama/Llama-2-7b) as the large language model.
@@ -284,7 +302,11 @@ The pre-trained weight of LaVIT can be found on the huggingface from [here](http
 </table>
 
 ## Usage
-LaVIT can serve as a multi-modal generalist to perform both multi-modal comprehension and generation. Below, we provide some examples. Only a few lines of code are needed to use **LaVIT** for inference. We also provide the detailed examples in the jupyter notebooks: `understanding.ipynb` and `generation.ipynb`. You can refer them for learning how to interact with LaVIT. 
+LaVIT can serve as a multi-modal generalist to perform both multi-modal comprehension and generation. Below, we provide some examples. Only a few lines of code are needed to use **LaVIT** for inference. We also provide the detailed examples in the following jupyter notebooks for learning how to interact with LaVIT. 
+
+* `understanding.ipynb` : examples for multi-modal understanding
+* `text2image_synthesis.ipynb`: examples for the text-to-image generation.
+* `multimodal_synthesis.ipynb`: examples for image synthesis with multi-modal prompts.
 
 ### Multi-modal Understanding
 
@@ -330,17 +352,19 @@ print("The answer is: ", answer)
 # The answer is: orange juice
 ```
 
-### Multi-modal generation
+### Text-to-Image Synthesis
 
-For the Image generation, the Classifier-Free Guidance scale is important. A larger scale will encourage the model to generate samples highly related to the input prompt while sacrificing the image quality. We recommend setting `guidance_scale_for_llm=3.0` by default, you can increase this scale (e.g., 4.0 or 5.0) to encourage the generated image to follow the semantics of given prompts.
+For the Image generation, the Classifier-Free Guidance scale is important. A larger scale will encourage the model to generate samples highly related to the input prompt while sacrificing the image quality. We set `guidance_scale_for_llm=4.0` by default, you can increase this scale (e.g., 5.0 or 6.0) to encourage the generated image to follow the semantics of given prompts. Besides, you can modify the `ratio` to enable to generate the images with different aspect ratios.
 
 ```python
 import os
 import torch
+import random
 import torch.nn as nn
 from models import build_model
 from PIL import Image
 
+random.seed(42)
 torch.manual_seed(42)
 
 # The local directory you save the LaVIT pre-trained weight, 
@@ -357,23 +381,33 @@ device = torch.device('cuda')
 torch_dtype = torch.bfloat16 if model_dtype=="bf16" else torch.float16
 
 # Building LaVIT for Generation and load the weight from huggingface
-model = build_model(model_path=model_path, model_dtype=model_dtype,
-            device_id=device_id, use_xformers=False, understanding=False)
+# You can set `use_xformers=True` if have installed xformers to save GPU mempry and speed up
+model = build_model(model_path=model_path, model_dtype=model_dtype, device_id=device_id,
+       use_xformers=False, understanding=False, load_tokenizer=False)
 model = model.to(device)    
 
 # Text-to-Image Generation
 prompt = "a sculpture of a duck made of wool"
-with torch.cuda.amp.autocast(enabled=True, dtype=torch_dtype):
-  image = model.generate_image(prompt, guidance_scale_for_llm=3.0, num_return_images=1)[0]
-image.save("output/i2t_output.jpg")
 
-# Multi-modal Image synthesis
-image_prompt = 'demo/dog.jpg'
-text_prompt = 'It is running in the snow'
-input_prompts = [(image_prompt, 'image'), (text_prompt, 'text')]
+# LaVIT support 6 different image aspect ratios
+ratio_dict = {
+    '1:1' : (1024, 1024),
+    '4:3' : (896, 1152),
+    '3:2' : (832, 1216),
+    '16:9' : (768, 1344),
+    '2:3' : (1216, 832),
+    '3:4' : (1152, 896),
+}
+
+# The image aspect ratio you want to generate
+ratio = '1:1'
+height, width = ratio_dict[ratio]
+
 with torch.cuda.amp.autocast(enabled=True, dtype=torch_dtype):
-  image = model.multimodal_synthesis(input_prompts, guidance_scale_for_llm=5.0, num_return_images=1)[0]
-image.save("output/it2i_output.jpg")
+    images = model.generate_image(prompt, width=width, height=height, 
+    num_return_images=1, guidance_scale_for_llm=4.0, num_inference_steps=50)
+
+images[0].save("output/i2t_output.jpg")
 ```
 
 ## Evaluation
@@ -385,6 +419,7 @@ We are grateful for the following awesome projects when implementing LaVIT:
 * [BLIP-2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2): Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models 
 * [EVA-CLIP](https://github.com/baaivision/EVA/tree/master/EVA-CLIP): Improved Training Techniques for CLIP at Scale
 * [BEIT](https://github.com/microsoft/unilm/tree/master/beit2): Masked Image Modeling with Vector-Quantized Visual Tokenizers
+* [Diffusers](https://github.com/huggingface/diffusers): State-of-the-art diffusion models for image and audio generation in PyTorch.
 
 
 ## <a name="Citing"></a>Citation
