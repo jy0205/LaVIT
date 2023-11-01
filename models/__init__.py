@@ -37,7 +37,8 @@ def build_model(
     print("Downloading the LaVIT checkpoint from huggingface")
 
     if not local_files_only:
-        snapshot_download("rain1011/LaVIT-7B-v1", local_dir=model_path, local_files_only=local_files_only)
+        snapshot_download("rain1011/LaVIT-7B-v1", local_dir=model_path, 
+            local_files_only=local_files_only, local_dir_use_symlinks=False)
 
     if understanding:
         lavit = LaVITforUnderstanding(model_path=model_path, model_dtype=model_dtype, 

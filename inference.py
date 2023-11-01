@@ -2,6 +2,7 @@ import os
 import torch
 import random
 import torch.nn as nn
+import numpy as np
 from models import build_model
 from PIL import Image
 
@@ -65,6 +66,11 @@ def example_for_generation():
 if __name__ == "__main__":
     model_path='models/LaVIT_checkpoint'
     model_dtype='bf16'
+
+    seed = 1234
+    torch.manual_seed(seed)
+    np.random.seed(seed)
+    random.seed(seed)
 
     device_id = 0
     torch.cuda.set_device(device_id)
