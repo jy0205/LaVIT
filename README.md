@@ -359,13 +359,9 @@ For the Image generation, the Classifier-Free Guidance scale is important. A lar
 ```python
 import os
 import torch
-import random
 import torch.nn as nn
 from models import build_model
 from PIL import Image
-
-random.seed(42)
-torch.manual_seed(42)
 
 # The local directory you save the LaVIT pre-trained weight, 
 # it will automatically download the checkpoint from huggingface
