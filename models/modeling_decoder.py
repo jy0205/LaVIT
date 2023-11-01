@@ -20,7 +20,6 @@ try:
     from apex.normalization import FusedLayerNorm
 except:
     FusedLayerNorm = LayerNorm
-    print("Please install apex")
 
 
 class Mlp(nn.Module):
