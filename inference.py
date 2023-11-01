@@ -71,9 +71,6 @@ if __name__ == "__main__":
     device = torch.device('cuda')
     torch_dtype = torch.bfloat16 if model_dtype == 'bf16' else torch.float16
 
-    random.seed(42)
-    torch.manual_seed(42)
-
     ## For Multi-Modal Understanding
     example_for_understanding()
 
