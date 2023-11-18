@@ -436,9 +436,9 @@ class LaVITforGeneration(nn.Module):
         length_penalty=1,
         max_length=200,
         min_length=20,
-        num_inference_steps=50, 
+        num_inference_steps=25, 
         guidance_scale_for_llm=4.0,
-        guidance_scale_for_decoder=7.0,
+        guidance_scale_for_decoder=5.0,
         uncond_input_ids=None,
         is_token_prompt=False,
     ):
@@ -552,9 +552,9 @@ class LaVITforGeneration(nn.Module):
         length_penalty=1,
         max_length=200,
         min_length=20,
-        num_inference_steps=50, 
+        num_inference_steps=25, 
         guidance_scale_for_llm=5.0,
-        guidance_scale_for_decoder=7.0,
+        guidance_scale_for_decoder=5.0,
         uncond_input_ids=None,
     ):
         # The multi-modal propmts with format:

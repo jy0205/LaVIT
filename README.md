@@ -5,9 +5,31 @@ This is the official repository for the multi-modal large language model: **LaVI
 [[`arXiv`](https://arxiv.org/abs/2309.04669)] [[`BibTeX`](#Citing)]
 
 ## News and Updates
-* ```2023.10.17``` 🚀🚀🚀  We release the pre-trained weight for **LaVIT** on the HuggingFace and provide the inference code of using it for both multi-modal understanding and generation.
+
+* ```2023.11.17``` 👏👏👏 We further improve LaVIT's image generation capability. In the updated version ([here](https://huggingface.co/rain1011/LaVIT-7B-v2)), the **aesthetic** and **prompt-alignment** of generated images has been improved. The **probability of watermark** is also greatly reduced. The improvements are summarized as follows:
+  * Using LaVIT to generate better synthetic captions for the noisy Laion-Aesthetic (Like DALL-E 3). 
+  * Add the high-aesthetic training images from the open-source JourneyDB dataset.
+  * Using the 20M synthetic Laion-Aesthetic data and 4.2M JourneyDB data to further finetune the LLM for 8K steps.
 
 * ```2023.10.31``` 🌟🌟🌟 We update the high-resolution pixel decoder in **LaVIT**, which supports to generate high resolution (1024 * 1024 pixels), muliple aspect ratios (1:1, 4:3, 3:2, 16:9 ...) and high aesthetics images. The quality of generated images have been improved siginificantly.
+
+* ```2023.10.17``` 🚀🚀🚀  We release the pre-trained weight for **LaVIT** on the HuggingFace and provide the inference code of using it for both multi-modal understanding and generation.
+
+
+<!-- the LLM of LaVIT is -->
+
+<!-- 使用LaVIT对noisy的Laion- Aesthetic合成了caotion，并用这些合成的caption对于LLM进行微调 -->
+
+## Future Schedules
+
+Stay tuned for this repository! We will continue to optimize the performance of LaVIT and support more interesting and powerful capabilities in the future.
+
+- [ ] The online demo for LaVIT
+- [ ] Further improve the multi-modal image synthesis performance of LaVIT, including multi-modal image editing, subject-driven image synthesis ...
+- [ ] Further improve the multi-modal understanding ability through instruction tuning.
+- [ ] The finetuning code of LaVIT.
+- [ ] The LaVIT-Video, enable LaVIT to understand and generate video content. 
+
 
 ## Introduction
 We propose **LaVIT**, a new general-purpose multi-modal foundation model that inherits the successful learning paradigm of LLM: predicting the next image / text token in an auto-regressive manner. LaVIT introduces a well-designed visual tokenizer to translate the non-linguistic image into a sequence of discrete tokens like a foreign language that LLM can read. Hence, both images and texts can be handled simultaneously under the unified generative objective. For more technical details, please refer to our [paper](https://arxiv.org/abs/2309.04669).
@@ -19,7 +41,7 @@ We propose **LaVIT**, a new general-purpose multi-modal foundation model that in
 
 After pre-training, LaVIT can serve as a multi-modal generalist to perform both multi-modal comprehension and generation without further fine-tuning. Specifically, it has the following capabilities:
 
-* Read image contents and answer the questions.
+* Read image contents, generate the captions and answer the questions.
 * Text-to-image creation.
 * Image synthesis via Multi-modal Prompt.
 
@@ -66,10 +88,11 @@ pip install -r requirements.txt
 * (Optional) We recommend using memory efficient attention by installing xFormers following the instructions in [here](https://huggingface.co/docs/diffusers/main/en/optimization/xformers). Then, you can set the argument `use_xformers=True` in `build_model` function  to save the GPU memory and speed up inference.
 
 ### Model Zoo
-We release the LaVIT weight that is built upon [Llama-2-7B](https://huggingface.co/meta-llama/Llama-2-7b) as the large language model.
-> Note: Due to the license restrictions of Llama1, we cannot publish its weights. Thus, we release the weight of LaVIT based on the Llama2.
+We release the LaVIT weight that is built upon [Llama-2-7B](https://huggingface.co/meta-llama/Llama-2-7b) as the large language model. 
+> Note: Due to the license restrictions of Llama1, we cannot publish its weights. Thus, we release the weight of LaVIT based on the Llama2. 
 
-The pre-trained weight of LaVIT can be found on the huggingface from [here](https://huggingface.co/rain1011/LaVIT-7B-v1), which will take around 22GB of disk space. LaVIT achieves state-of-the-arts performance on various multi-modal downstream tasks. The detailed quantitive results are shown as follows:
+The latest pre-trained weight of LaVIT can be found on the huggingface from [here](https://huggingface.co/rain1011/LaVIT-7B-v2), which will take around 25GB of disk space. We strongly recommend you to download and use the latest version of LaVIT. LaVIT achieves state-of-the-arts performance on various multi-modal downstream tasks. The detailed quantitive results are shown as follows:
+
 
 #### Zero-shot Multi-modal Understanding
 
@@ -407,7 +430,7 @@ height, width = ratio_dict[ratio]
 
 with torch.cuda.amp.autocast(enabled=True, dtype=torch_dtype):
     images = model.generate_image(prompt, width=width, height=height, 
-    num_return_images=1, guidance_scale_for_llm=4.0, num_inference_steps=50)
+    num_return_images=1, guidance_scale_for_llm=4.0, num_inference_steps=25)
 
 images[0].save("output/i2t_output.jpg")
 ```

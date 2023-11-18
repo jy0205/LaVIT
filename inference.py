@@ -10,7 +10,7 @@ from PIL import Image
 def example_for_understanding():
     # Building model and load weight
     model = build_model(model_path=model_path, model_dtype=model_dtype,
-                device_id=device_id, use_xformers=False, understanding=True)
+                device_id=device_id, use_xformers=True, understanding=True)
     model = model.to(device)    
 
     # Image Captioning
@@ -29,7 +29,7 @@ def example_for_understanding():
 def example_for_generation():
     # Building model and load weight
     model = build_model(model_path=model_path, model_dtype=model_dtype, check_safety=False,
-                device_id=device_id, use_xformers=False, understanding=False)
+                device_id=device_id, use_xformers=True, understanding=False)
     model = model.to(device)    
 
     # LaVIT support 6 different image aspect ratios
