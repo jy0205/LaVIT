@@ -16,10 +16,6 @@ This is the official repository for the multi-modal large language model: **LaVI
 * ```2023.10.17``` 🚀🚀🚀  We release the pre-trained weight for **LaVIT** on the HuggingFace and provide the inference code of using it for both multi-modal understanding and generation.
 
 
-<!-- the LLM of LaVIT is -->
-
-<!-- 使用LaVIT对noisy的Laion- Aesthetic合成了caotion，并用这些合成的caption对于LLM进行微调 -->
-
 ## Future Schedules
 
 Stay tuned for this repository! We will continue to optimize the performance of LaVIT and support more interesting and powerful capabilities in the future.
