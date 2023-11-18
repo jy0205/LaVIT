@@ -24,7 +24,7 @@ Stay tuned for this repository! We will continue to optimize the performance of 
 - [ ] Further improve the multi-modal image synthesis performance of LaVIT, including multi-modal image editing, subject-driven image synthesis ...
 - [ ] Further improve the multi-modal understanding ability through instruction tuning.
 - [ ] The finetuning code of LaVIT.
-- [ ] The LaVIT-Video, enable LaVIT to understand and generate video content. 
+- [ ] Improve the image synthesis speed.
 
 
 ## Introduction
