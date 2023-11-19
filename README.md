@@ -227,7 +227,7 @@ LaVIT achieves state-of-the-arts performance on various multi-modal downstream t
     <td><b>134.6</b></td>
     <td>113.1</td>
     <td><b>83.2</b></td>
-    <td><b>68.2</b></td>
+    <td>68.2</td>
     <td>55.7</td>
     <td><b>48.0</b></td>
     <td><b>45.3</b></td>
