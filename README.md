@@ -6,7 +6,7 @@ This is the official repository for the multi-modal large language model: **LaVI
 
 ## News and Updates
 
-* ```2023.11.17``` 👏👏👏 We further improve LaVIT's image generation capability. In the updated version ([here](https://huggingface.co/rain1011/LaVIT-7B-v2)), the **aesthetic** and **prompt-alignment** of generated images has been improved. The **probability of watermark** is also greatly reduced. The improvements are summarized as follows:
+* ```2023.11.17``` 👏👏👏 We further improve LaVIT's image generation capability. In the updated version ([LaVIT-v2](https://huggingface.co/rain1011/LaVIT-7B-v2)), the **aesthetic** and **prompt-alignment** of generated images has been improved. The **probability of watermark** is also greatly reduced. The improvements are summarized as follows:
   * Using LaVIT to generate better synthetic captions for the noisy Laion-Aesthetic (Like DALL-E 3). 
   * Add the high-aesthetic training images from the open-source JourneyDB dataset.
   * Using the 20M synthetic Laion-Aesthetic data and 4.2M JourneyDB data to further finetune the LLM for 8K steps.
@@ -84,10 +84,12 @@ pip install -r requirements.txt
 * (Optional) We recommend using memory efficient attention by installing xFormers following the instructions in [here](https://huggingface.co/docs/diffusers/main/en/optimization/xformers). Then, you can set the argument `use_xformers=True` in `build_model` function  to save the GPU memory and speed up inference.
 
 ### Model Zoo
-We release the LaVIT weight that is built upon [Llama-2-7B](https://huggingface.co/meta-llama/Llama-2-7b) as the large language model. 
+We release the LaVIT weight that is built upon [Llama-2-7B](https://huggingface.co/meta-llama/Llama-2-7b) as the large language model. The latest pre-trained weight of LaVIT can be found on the huggingface, which will take around 26GB of disk space. We strongly recommend you to download and use the latest version: [LaVIT-v2](https://huggingface.co/rain1011/LaVIT-7B-v2), since the image generation capability of this version has been greatly improved.
+
 > Note: Due to the license restrictions of Llama1, we cannot publish its weights. Thus, we release the weight of LaVIT based on the Llama2. 
 
-The latest pre-trained weight of LaVIT can be found on the huggingface from [here](https://huggingface.co/rain1011/LaVIT-7B-v2), which will take around 25GB of disk space. We strongly recommend you to download and use the latest version of LaVIT. LaVIT achieves state-of-the-arts performance on various multi-modal downstream tasks. The detailed quantitive results are shown as follows:
+
+LaVIT achieves state-of-the-arts performance on various multi-modal downstream tasks. The detailed quantitive results are shown as follows:
 
 
 #### Zero-shot Multi-modal Understanding
@@ -221,14 +223,24 @@ The latest pre-trained weight of LaVIT can be found on the huggingface from [her
     <td>38.5</td>
   </tr>
   <tr>
-    <td>LaVIT (LLaMA-2-7B)</td>
+    <td>LaVIT-v1 (LLaMA-2-7B)</td>
     <td><b>134.6</b></td>
     <td>113.1</td>
     <td><b>83.2</b></td>
     <td><b>68.2</b></td>
-    <td><b>55.7</b></td>
+    <td>55.7</td>
     <td><b>48.0</b></td>
     <td><b>45.3</b></td>
+  </tr>
+  <tr>
+    <td>LaVIT-v2 (LLaMA-2-7B)</td>
+    <td>133.3</td>
+    <td>112.0</td>
+    <td>81.4</td>
+    <td><b>68.3</b></td>
+    <td><b>55.9</b></td>
+    <td>47.9</td>
+    <td>41.0</td>
   </tr>
 </tbody>
 </table>
@@ -292,7 +304,7 @@ The latest pre-trained weight of LaVIT can be found on the huggingface from [her
     <td><b>7.2</b></td>
   </tr>
   <tr>
-    <td rowspan="5">Multimodal Large Langauge Model</td>
+    <td rowspan="6">Multimodal Large Langauge Model</td>
     <td>GILL (OPT-6.7B)</td>
     <td>LLM</td>
     <td>12.2</td>
@@ -313,9 +325,14 @@ The latest pre-trained weight of LaVIT can be found on the huggingface from [her
     <td>7.4</td>
   </tr>
   <tr>
-    <td>LaVIT (LLaMA-2-7B)</td>
+    <td>LaVIT-v1 (LLaMA-2-7B)</td>
     <td>LLM</td>
-    <td><b>7.2</b></td>
+    <td>7.2</td>
+  </tr>
+  <tr>
+    <td>LaVIT-v2 (LLaMA-2-7B)</td>
+    <td>LLM</td>
+    <td><b>7.1</b></td>
   </tr>
 </tbody>
 </table>
