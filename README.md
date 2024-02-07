@@ -10,7 +10,7 @@ This is the official repository for the multi-modal large language models: **LaV
 
 ## News and Updates
 
-* ```2023.02.05``` 🚀🚀🚀 We have proposed the Video-LaVIT: an effective multimodal pre-training approach that empowers LLMs to comprehend and generate video content in a unified framework. You can refer to [[`arXiv`](https://arxiv.org/abs/2402.03161)] and [[`Project`](https://video-lavit.github.io)] for more details.
+* ```2024.02.05``` 🚀🚀🚀 We have proposed the Video-LaVIT: an effective multimodal pre-training approach that empowers LLMs to comprehend and generate video content in a unified framework. You can refer to [[`arXiv`](https://arxiv.org/abs/2402.03161)] and [[`Project`](https://video-lavit.github.io)] for more details. The code and models will be released in next few weaks.
 
 * ```2023.11.17``` 👏👏👏 We further improve LaVIT's image generation capability. In the updated version ([LaVIT-v2](https://huggingface.co/rain1011/LaVIT-7B-v2)), the **aesthetic** and **prompt-alignment** of generated images has been improved. The **probability of watermark** is also greatly reduced. The improvements are summarized as follows:
   * Using LaVIT to generate better synthetic captions for the noisy Laion-Aesthetic (Like DALL-E 3). 
