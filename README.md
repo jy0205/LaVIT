@@ -4,7 +4,7 @@
 
 # Video-LaVIT: Unified Video-Language Pre-training with Decoupled Visual-Motional Tokenization
 
-[[`arXiv`](https://arxiv.org/abs/2402.03161)] [[`Project`](https://video-lavit.github.io)]
+[[`arXiv`](https://arxiv.org/abs/2402.03161)] [[`Project`](https://video-lavit.github.io)] [[`BibTeX`](#Citing)]
 
 This is the official repository for the multi-modal large language models: **LaVIT** and **Video-LaVIT**.
 
@@ -475,4 +475,11 @@ Consider giving this repository a star and cite LaVIT in your publications if it
   author={Jin, Yang and Xu, Kun and Xu, Kun and Chen, Liwei and Liao, Chao and Tan, Jianchao and Mu, Yadong and others},
   journal={arXiv preprint arXiv:2309.04669},
   year={2023}
+}
+
+@article{jin2024video,
+  title={Video-LaVIT: Unified Video-Language Pre-training with Decoupled Visual-Motional Tokenization},
+  author={Jin, Yang and Sun, Zhicheng and Xu, Kun and Chen, Liwei and Jiang, Hao and Huang, Quzhe and Song, Chengru and Liu, Yuliang and Zhang, Di and Song, Yang and others},
+  journal={arXiv preprint arXiv:2402.03161},
+  year={2024}
 }
