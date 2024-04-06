@@ -78,6 +78,7 @@ def convert_weights_to_bf16(model: nn.Module):
 
 def save_result(result, result_dir, filename, remove_duplicate=""):
     import json
+
     print("Dump result")
 
     # Make the temp dir for saving results
@@ -87,9 +88,7 @@ def save_result(result, result_dir, filename, remove_duplicate=""):
         if is_dist_avail_and_initialized():
             torch.distributed.barrier()
 
-    result_file = os.path.join(
-        result_dir, "%s_rank%d.json" % (filename, get_rank())
-    )
+    result_file = os.path.join(result_dir, "%s_rank%d.json" % (filename, get_rank()))
     final_result_file = os.path.join(result_dir, "%s.json" % filename)
 
     json.dump(result, open(result_file, "w"))

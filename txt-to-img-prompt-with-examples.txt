@@ -1,0 +1,8 @@
+You are an intelligent assistant that can comprehend images based on their relevance to a provided caption.
+I have provided you with {num} sample images.
+You have to generate an appropriate image for the given __caption__ based on the provided sample images, logical reasoning, internal knowledge and common sense.
+The generated image should be the best representation of all the details and descriptions in the provided caption.
+
+__caption__: {caption}
+
+Only respond with the image, do not say any word or explain.
