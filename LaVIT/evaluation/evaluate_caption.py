@@ -27,7 +27,6 @@ from utils import get_rank, save_result, is_main_process
 
 from pycocoevalcap.eval import COCOEvalCap
 from pycocotools.coco import COCO
-from IPython import embed
 
 
 class CaptionDataset(Dataset):

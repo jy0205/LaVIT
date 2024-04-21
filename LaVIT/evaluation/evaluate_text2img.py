@@ -27,7 +27,6 @@ from torchvision.transforms.functional import to_tensor
 from models.openai_clip import clip
 from models import build_model
 from utils import get_rank, is_main_process
-from IPython import embed
 
 
 class ImageDataset(Dataset):

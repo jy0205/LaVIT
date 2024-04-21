@@ -24,7 +24,6 @@ from models.modeling_visual_tokenzier import build_dynamic_tokenizer, VectorQuan
 import PIL
 from PIL import Image
 from tqdm import tqdm
-from IPython import embed
 
 
 class LaVITDetokenizer(nn.Module):

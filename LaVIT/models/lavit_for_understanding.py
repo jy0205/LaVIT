@@ -13,7 +13,6 @@ from models.transform import LaVITImageProcessor, LaVITQuestionProcessor
 from PIL import Image
 from torchvision import transforms
 from torchvision.transforms.functional import InterpolationMode
-from IPython import embed
 
 
 class LaVITforUnderstanding(nn.Module):

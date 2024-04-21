@@ -13,7 +13,6 @@ __author__ = "aagrawal"
 # (https://github.com/tylin/coco-caption/blob/master/pycocoevalcap/eval.py).
 import sys
 import re
-from IPython import embed
 import json
 from multiprocessing import Pool
 

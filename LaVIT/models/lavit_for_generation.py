@@ -28,7 +28,6 @@ from utils import get_rank
 import PIL
 from PIL import Image
 from tqdm import tqdm
-from IPython import embed
 
 
 class LaVITforGeneration(nn.Module):
