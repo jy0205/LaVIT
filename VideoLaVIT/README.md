@@ -147,6 +147,7 @@ We are grateful for the following awesome projects when implementing LaVIT:
 * [EVA-CLIP](https://github.com/baaivision/EVA/tree/master/EVA-CLIP): Improved Training Techniques for CLIP at Scale
 * [BEIT](https://github.com/microsoft/unilm/tree/master/beit2): Masked Image Modeling with Vector-Quantized Visual Tokenizers
 * [Diffusers](https://github.com/huggingface/diffusers): State-of-the-art diffusion models for image and audio generation in PyTorch.
+* [LAVIS](https://github.com/salesforce/LAVIS): A One-stop Library for Language-Vision Intelligence
 
 
 ## <a name="Citing"></a>Citation

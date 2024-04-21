@@ -22,7 +22,6 @@ import inspect
 from utils import _resize_with_antialiasing
 from PIL import Image
 from tqdm import tqdm
-from IPython import embed
 
 
 class LayerNorm(nn.LayerNorm):

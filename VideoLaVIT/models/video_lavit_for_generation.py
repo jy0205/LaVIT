@@ -29,7 +29,6 @@ from torchvision.transforms.functional import to_tensor
 import PIL
 from PIL import Image
 from tqdm import tqdm
-from IPython import embed
 
 
 class VideoLaVITforGeneration(nn.Module):
