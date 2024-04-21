@@ -9,8 +9,6 @@ from collections import OrderedDict
 from functools import partial, reduce
 from timm.models.layers import drop_path, to_2tuple, trunc_normal_
 from models.modeling_visual_encoder import build_eva_clip
-from torchvision import transforms as pth_transforms
-from torchvision.transforms.functional import InterpolationMode
 
 
 class LayerNorm(nn.LayerNorm):
@@ -357,15 +355,11 @@ class DynamicVisualTokenizer(nn.Module):
         llm_embed_dim = 4096   # LLaMA 7B's embedding dimension: 4096
         self.vit_proj = nn.Linear(width, llm_embed_dim)
 
-        self.transform = pth_transforms.Compose([
-            pth_transforms.Resize((512, 512), interpolation=InterpolationMode.BICUBIC),
-            pth_transforms.ToTensor(),
-        ])
-
     def encode_features(self, x):
         """
         x: B, 3, H, W
-        Usage: Given the input image, encode the visual features for the LLM
+        Usage: Given the input image, encode the visual features for the LLM, without quantization,
+            Used for Understanding
         """
         device = x.device
         encoder_features = self.encoder(x, return_all_features=True)   # N, 257, D
@@ -378,7 +372,7 @@ class DynamicVisualTokenizer(nn.Module):
         pred_score = self.token_predictor(encoder_features.to(torch.float32), mask).reshape(B, -1, 2)
         # Sample from the score distribution
         hard_keep_decision = F.gumbel_softmax(pred_score, hard=True)[:, :, 0]   # [N, num_patches]
-                
+        
         # Update the existed features from dropped tokens (To remain the information flow)
         updated_features = self.causal_encoder(encoder_features, hard_keep_decision)
         updated_features = self.vit_proj(updated_features)  # [bs, 256, 4096]
@@ -396,7 +390,7 @@ class DynamicVisualTokenizer(nn.Module):
 
         return remained_token_list
 
-    def tokenize_image(self, x_tensor, add_special=False):
+    def tokenize_image(self, x_tensor, add_special=False, used_for_llm=True):
         # x_tensor: [bs, 3, h, w]
         feature_targets = self.encoder(x_tensor, return_all_features=True)   # N, 257, D
         encoder_features = feature_targets[:,1:,:]
@@ -419,6 +413,10 @@ class DynamicVisualTokenizer(nn.Module):
         
         to_quantizer_features = self.encode_task_layer(remained_token.type_as(self.encode_task_layer[-1].weight))  
         quantize, embed_ind = self.quantize.tokenize(to_quantizer_features)
+        
+        if not used_for_llm:
+            return quantize, token_nums
+
         embed_ind = embed_ind + 32002
         embed_ind_list = torch.split(embed_ind, token_nums.tolist(), dim=0)
 
@@ -433,7 +431,7 @@ class DynamicVisualTokenizer(nn.Module):
         return embed_ind_list
         
 
-def build_dynamic_tokenizer(model_path='', use_xformers=False, for_understanding=False):
+def build_dynamic_tokenizer(model_path='', use_xformers=False, for_understanding=False, model_sub_dir='language_model'):
     model = DynamicVisualTokenizer(model_path=model_path, use_xformers=use_xformers)
     weight_path = os.path.join(model_path, 'visual_tokenizer', 'tokenizer_encoder.bin')
     print(f"Load visual tokenizer encoder weight from {weight_path}")
@@ -443,7 +441,7 @@ def build_dynamic_tokenizer(model_path='', use_xformers=False, for_understanding
     if for_understanding:
         # For Understanding, the LaVIT use the continuous visual features, 
         # so needs to load the token merger weight trained with LLM
-        visual_weight_path = os.path.join(model_path, 'language_model', 'visual_weight.bin')
+        visual_weight_path = os.path.join(model_path, model_sub_dir, 'visual_weight.bin')
         print(f"For multi-modal understanding, Load visual tokenizer weight from {visual_weight_path}")
         state_dict = torch.load(visual_weight_path, map_location="cpu") 
         model.load_state_dict(state_dict, strict=False)

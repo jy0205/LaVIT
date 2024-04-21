@@ -645,16 +645,13 @@ def build_eva_clip(model_path, use_xformers=False):
         quick_gelu = False,
     )
 
-    # Load the pre-trained eva-vitG weight
-    eva_weight_path = os.path.join(model_path, 'visual_tokenizer', 'eva_vitg_psz14.bin')
-    print(f"Load eva vitG weight from {eva_weight_path}")
-    checkpoint = torch.load(eva_weight_path, map_location='cpu')
-    model.load_state_dict(checkpoint)
+    if model_path == '':
+        return model
+    else:
+        # Load the pre-trained eva-vitG weight
+        eva_weight_path = os.path.join(model_path, 'visual_tokenizer', 'eva_vitg_psz14.bin')
+        print(f"Load eva vitG weight from {eva_weight_path}")
+        checkpoint = torch.load(eva_weight_path, map_location='cpu')
+        model.load_state_dict(checkpoint)
 
     return model
-
-
-if __name__ == "__main__":
-    from IPython import embed
-    model = build_eva_clip('/home/jinyang06/models/LaVIT_LLaMA2')
-    embed()

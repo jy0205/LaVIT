@@ -1,5 +1,6 @@
 from .lavit_for_generation import LaVITforGeneration
 from .lavit_for_understanding import LaVITforUnderstanding
+from .image_detokenize import LaVITDetokenizer
 from .transform import LaVITImageProcessor, LaVITQuestionProcessor
 from utils import convert_weights_to_bf16, convert_weights_to_fp16
 from huggingface_hub import snapshot_download
@@ -17,6 +18,7 @@ def build_model(
     pixel_decoding='highres',
     check_safety=True,
     local_files_only=False,
+    model_sub_dir='language_model',
 ):
     """
     model_path (str): The local directory for the saving the model weight
@@ -42,10 +44,11 @@ def build_model(
 
     if understanding:
         lavit = LaVITforUnderstanding(model_path=model_path, model_dtype=model_dtype, 
-                device_id=device_id, use_xformers=use_xformers)
+                device_id=device_id, use_xformers=use_xformers, model_sub_dir=model_sub_dir)
     else:
         lavit = LaVITforGeneration(model_path=model_path, model_dtype=model_dtype, device_id=device_id, 
-                use_xformers=use_xformers, check_safety=check_safety, load_tokenizer=load_tokenizer, pixel_decoding=pixel_decoding)
+                use_xformers=use_xformers, check_safety=check_safety, load_tokenizer=load_tokenizer, 
+                pixel_decoding=pixel_decoding, model_sub_dir=model_sub_dir)
 
     # Convert the model parameters to the defined precision
     if model_dtype == 'bf16':

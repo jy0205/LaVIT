@@ -1,16 +1,12 @@
-# LaVIT: Unified Language-Vision Pretraining in LLM with Dynamic Discrete Visual Tokenization
+# ICLR 2024: Unified Language-Vision Pretraining in LLM with Dynamic Discrete Visual Tokenization
 
 [[`arXiv`](https://arxiv.org/abs/2309.04669)] [[`BibTeX`](#Citing)]
 
-# Video-LaVIT: Unified Video-Language Pre-training with Decoupled Visual-Motional Tokenization
-
-[[`arXiv`](https://arxiv.org/abs/2402.03161)] [[`Project`](https://video-lavit.github.io)] [[`BibTeX`](#Citing)]
-
-This is the official repository for the multi-modal large language models: **LaVIT** and **Video-LaVIT**.
+This is the official repository for the multi-modal large language models: **LaVIT**.
 
 ## News and Updates
 
-* ```2024.02.05``` 🚀🚀🚀 We have proposed the Video-LaVIT: an effective multimodal pre-training approach that empowers LLMs to comprehend and generate video content in a unified framework. You can refer to [[`arXiv`](https://arxiv.org/abs/2402.03161)] and [[`Project`](https://video-lavit.github.io)] for more details. The code and models will be released in next few weaks.
+* ```2024.04.21``` 🚀🚀🚀 We have updated the code for downstream tasks evaluation and the visualization notebook of the LaVIT decoder for reconstructing the input images.
 
 * ```2023.11.17``` 👏👏👏 We further improve LaVIT's image generation capability. In the updated version ([LaVIT-v2](https://huggingface.co/rain1011/LaVIT-7B-v2)), the **aesthetic** and **prompt-alignment** of generated images has been improved. The **probability of watermark** is also greatly reduced. The improvements are summarized as follows:
   * Using LaVIT to generate better synthetic captions for the noisy Laion-Aesthetic (Like DALL-E 3). 
@@ -24,12 +20,10 @@ This is the official repository for the multi-modal large language models: **LaV
 
 ## Future Schedules
 
-Stay tuned for this repository! We will continue to optimize the performance of LaVIT and support more interesting and powerful capabilities in the future.
-
-- [ ] The online demo for LaVIT
-- [ ] Further improve the multi-modal image synthesis performance of LaVIT, including multi-modal image editing, subject-driven image synthesis ...
+- [x] The evaluation code of LaVIT.
 - [ ] Further improve the multi-modal understanding ability through instruction tuning.
-- [ ] The finetuning code of LaVIT.
+- [ ] The finetuning code for LaVIT
+- [ ] Further improve the multi-modal image synthesis performance of LaVIT, including multi-modal image editing, subject-driven image synthesis ...
 - [ ] Improve the image synthesis speed.
 
 
@@ -50,7 +44,7 @@ After pre-training, LaVIT can serve as a multi-modal generalist to perform both 
 ## Examples
 
 ### High Quality Text-to-Image Creation. 
-LaVIT can synthesis **high quality (up to 1024 * 1024)**, **muliple aspect ratios**, and **high aesthetics** images based on the given image prompt, whose image generation ablility is competitive with state-of-the-art image generators (Parti, SDXL, and DALLE-3). The following are some examples.
+LaVIT can synthesize **high quality (up to 1024 * 1024)**, **muliple aspect ratios**, and **high aesthetics** images based on the given image prompt, whose image generation ablility is competitive with state-of-the-art image generators (Parti, SDXL, and DALLE-3). The following are some examples.
 
 <div align="center">
   <img src="assets/text2image.png"/>
@@ -87,7 +81,7 @@ cd LaVIT
 pip install -r requirements.txt
 ```
 
-* (Optional) We recommend using memory efficient attention by installing xFormers following the instructions in [here](https://huggingface.co/docs/diffusers/main/en/optimization/xformers). Then, you can set the argument `use_xformers=True` in `build_model` function  to save the GPU memory and speed up inference.
+* (Optional) We recommend using memory efficient attention by installing xFormers following the instructions in [here](https://huggingface.co/docs/diffusers/main/en/optimization/xformers). Then, you can set the argument `use_xformers=True` in `build_model` function to save the GPU memory and speed up inference.
 
 ### Model Zoo
 We release the LaVIT weight that is built upon [Llama-2-7B](https://huggingface.co/meta-llama/Llama-2-7b) as the large language model. The latest pre-trained weight of LaVIT can be found on the huggingface, which will take around 26GB of disk space. We strongly recommend you to download and use the latest version: [LaVIT-v2](https://huggingface.co/rain1011/LaVIT-7B-v2), since the image generation capability of this version has been greatly improved.
@@ -349,6 +343,7 @@ LaVIT can serve as a multi-modal generalist to perform both multi-modal comprehe
 * `understanding.ipynb` : examples for multi-modal understanding
 * `text2image_synthesis.ipynb`: examples for the text-to-image generation.
 * `multimodal_synthesis.ipynb`: examples for image synthesis with multi-modal prompts.
+* `image_detokenize.ipynb`: examples for image reconstruction from the discrete image tokens.
 
 ### Multi-modal Understanding
 
@@ -455,7 +450,9 @@ images[0].save("output/i2t_output.jpg")
 ```
 
 ## Evaluation
-The batch evaluation code with multiple GPUs on the adopted multi-modal benchmarks will be released in the following days.
+
+We provide the zero-shot evaluation with multiple GPUs on the adopted multi-modal benchmarks for reproductivity. You can refer to the scripts in the `scripts` folder for detailed usage. For convenience, you can download the annotations from [here](https://disk.pku.edu.cn/link/AAA7F33EBBF85740F69726EB922CBC02A9), which also provides the evaluation dataset structure. Before evaluation, you need to download the images from the official dataset websites to the corresponding directory in the `data/*/images` folder.
+
 
 ## Acknowledgement
 We are grateful for the following awesome projects when implementing LaVIT:
@@ -475,11 +472,4 @@ Consider giving this repository a star and cite LaVIT in your publications if it
   author={Jin, Yang and Xu, Kun and Xu, Kun and Chen, Liwei and Liao, Chao and Tan, Jianchao and Mu, Yadong and others},
   journal={arXiv preprint arXiv:2309.04669},
   year={2023}
-}
-
-@article{jin2024video,
-  title={Video-LaVIT: Unified Video-Language Pre-training with Decoupled Visual-Motional Tokenization},
-  author={Jin, Yang and Sun, Zhicheng and Xu, Kun and Chen, Liwei and Jiang, Hao and Huang, Quzhe and Song, Chengru and Liu, Yuliang and Zhang, Di and Song, Yang and others},
-  journal={arXiv preprint arXiv:2402.03161},
-  year={2024}
 }

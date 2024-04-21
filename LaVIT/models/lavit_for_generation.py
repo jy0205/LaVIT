@@ -41,6 +41,7 @@ class LaVITforGeneration(nn.Module):
         check_safety=False,
         load_tokenizer=False,
         pixel_decoding='highres',
+        model_sub_dir='language_model',
         **kwargs
     ):
         """
@@ -57,9 +58,8 @@ class LaVITforGeneration(nn.Module):
 
         visual_vocab_size = 16384   # The visual vocab size of LaVIT is 16384
 
-        # logging.info(f'Loading LLAMA Model from {llama_model}')
         print(f"Loading LaVIT Model Weight from {model_path}, model precision: {model_dtype}")
-        self.llama_tokenizer = LlamaTokenizer.from_pretrained(model_path, subfolder='language_model', use_fast=False)
+        self.llama_tokenizer = LlamaTokenizer.from_pretrained(model_path, subfolder=model_sub_dir, use_fast=False)
         self.llama_tokenizer.padding_side = "left"
         self.llama_tokenizer.pad_token = self.llama_tokenizer.eos_token
 
@@ -69,7 +69,7 @@ class LaVITforGeneration(nn.Module):
             device_map={"": device_id}
 
         self.llama_model = LlamaForCausalLM.from_pretrained(
-            model_path, subfolder='language_model', torch_dtype=torch.bfloat16 if model_dtype=="bf16" else torch.float16, 
+            model_path, subfolder=model_sub_dir, torch_dtype=torch.bfloat16 if model_dtype=="bf16" else torch.float16, 
             device_map=device_map,
         )
         self.model_dtype = model_dtype
@@ -277,28 +277,6 @@ class LaVITforGeneration(nn.Module):
 
         return self.tokenizer_decoder(token_quantize, token_nums)
 
-    @torch.no_grad()
-    def generate_prompt_embeds(self, xrec):
-        # To prepare the condition
-        device = self.device
-        B = len(xrec)
-
-        encoder_hidden = xrec
-        _, num_tokens, C = encoder_hidden.shape
-
-        encoder_hidden_uncond = torch.zeros(B, num_tokens, C, dtype=encoder_hidden.dtype).to(device)
-        uncond_embeddings = self.uncond_embeddings[0].to(encoder_hidden.dtype)
-        encoder_hidden_uncond[:,:len(uncond_embeddings)] = uncond_embeddings
-
-        mask = torch.ones(B, num_tokens, dtype=torch.long).to(device)
-        uncond_mask = torch.zeros(B, num_tokens, dtype=torch.long).to(device)
-        uncond_mask[:, :len(uncond_embeddings)] = 1
-        
-        mask = mask.bool()
-        uncond_mask = uncond_mask.bool()
-
-        return encoder_hidden, encoder_hidden_uncond, mask, uncond_mask
-
     @staticmethod
     def numpy_to_pil(images: np.ndarray) -> PIL.Image.Image:
         """
@@ -471,8 +449,8 @@ class LaVITforGeneration(nn.Module):
             latents = torch.randn(
                 (batch_size, self.unet.config.in_channels, height // 8, width // 8),
             )
-            latents = latents * self.scheduler.init_noise_sigma
             latents = latents.to(torch_device)
+            latents = latents * self.scheduler.init_noise_sigma
 
             self.scheduler.set_timesteps(num_inference_steps, device=torch_device)
 

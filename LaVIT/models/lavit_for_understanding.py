@@ -29,6 +29,7 @@ class LaVITforUnderstanding(nn.Module):
         device_id=None,
         apply_lemmatizer=True,
         use_xformers=False,
+        model_sub_dir='language_model',
     ):
         """
         img_size: The input image size, should be 224 * 224
@@ -47,9 +48,9 @@ class LaVITforUnderstanding(nn.Module):
         else:
             device_map={"": device_id}
 
-        self.llama_tokenizer = LlamaTokenizer.from_pretrained(model_path, subfolder='language_model', use_fast=False)
+        self.llama_tokenizer = LlamaTokenizer.from_pretrained(model_path, subfolder=model_sub_dir, use_fast=False)
         self.llama_model = LlamaForCausalLM.from_pretrained(
-            model_path, subfolder='language_model', torch_dtype=torch.bfloat16 if model_dtype=="bf16" else torch.float16, 
+            model_path, subfolder=model_sub_dir, torch_dtype=torch.bfloat16 if model_dtype=="bf16" else torch.float16, 
             device_map=device_map,
         )
         for name, param in self.llama_model.named_parameters():
@@ -60,7 +61,8 @@ class LaVITforUnderstanding(nn.Module):
         print(f"The Visual Vocab Size is {self.visual_vocab_size}")
         print(f"The llama tokenizer vocab size is {len(self.llama_tokenizer)}")
 
-        self.visual_tokenizer = build_dynamic_tokenizer(model_path, use_xformers=use_xformers, for_understanding=True)
+        self.visual_tokenizer = build_dynamic_tokenizer(model_path, use_xformers=use_xformers, 
+                    for_understanding=True, model_sub_dir=model_sub_dir)
         self.model_dtype = model_dtype
         self.apply_lemmatizer = apply_lemmatizer
         self._lemmatizer = None
