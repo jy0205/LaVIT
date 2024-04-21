@@ -1,6 +1,6 @@
 # LaVIT: Empower the Large Language Model to Understand and Generate Visual Content
 
-This is the official repository for the multi-modal large language models: **LaVIT** and **Video-LaVIT**. The LaVIT project aims to leverage the exceptional capability of LLM to deal with visual content. The proposed pre-training strategy supports visual understanding and generation with one unified framework. You can find more examples in our [Project](https://video-lavit.github.io) website.
+This is the official repository for the multi-modal large language models: **LaVIT** and **Video-LaVIT**. The LaVIT project aims to leverage the exceptional capability of LLM to deal with visual content. The proposed pre-training strategy supports visual understanding and generation with one unified framework.
 
 * Unified Language-Vision Pretraining in LLM with Dynamic Discrete Visual Tokenization, ICLR 2024, [[`arXiv`](https://arxiv.org/abs/2309.04669)] [[`BibTeX`](#Citing)]
 
