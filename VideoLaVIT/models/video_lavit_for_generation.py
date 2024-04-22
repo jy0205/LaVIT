@@ -494,6 +494,7 @@ class VideoLaVITforGeneration(nn.Module):
         min_length=20,
         num_inference_steps=50, 
         guidance_scale_for_llm=4.0,
+        guidance_scale_for_motion=7.0,
         guidance_scale_for_decoder=3.0,
         uncond_input_ids=None,
         clip_num=1,
@@ -535,7 +536,7 @@ class VideoLaVITforGeneration(nn.Module):
 
         return self.generate_video(input_prompts, width, height, video_width, video_height, original_size, crops_coords_top_left, 
             use_nucleus_sampling, top_p, top_k, num_beams, temperature, num_return_images, length_penalty, max_length, min_length, num_inference_steps, 
-            guidance_scale_for_llm, guidance_scale_for_decoder, uncond_input_ids, clip_num, cond_on_ref_frame, use_linear_guidance, 
+            guidance_scale_for_llm, guidance_scale_for_motion, guidance_scale_for_decoder, uncond_input_ids, clip_num, cond_on_ref_frame, use_linear_guidance, 
             noise_aug_strength, decode_chunk_size, inverse_rate, is_token_prompt=True, ref_image=ref_images if len(ref_images) != 0 else None,
         )
 
@@ -558,6 +559,7 @@ class VideoLaVITforGeneration(nn.Module):
         min_length=20,
         num_inference_steps=50, 
         guidance_scale_for_llm=4.0,
+        guidance_scale_for_motion=7.0,
         guidance_scale_for_decoder=3.0,
         uncond_input_ids=None,
         clip_num=1,
@@ -602,13 +604,13 @@ class VideoLaVITforGeneration(nn.Module):
                 )
                 output_tokens, pure_motion_tokens = self.generate_motion_tokenids(
                     output_tokens, False, top_p, top_k, num_beams, temperature, num_return_images,
-                    length_penalty, max_length, min_length, guidance_scale_for_llm, uncond_input_ids, is_token_prompt=True,
+                    length_penalty, max_length, min_length, guidance_scale_for_motion, uncond_input_ids, is_token_prompt=True,
                 )
             else:
                 # image to video, only generate motion tokens
                 output_tokens, pure_motion_tokens = self.generate_motion_tokenids(
                     prompts, use_nucleus_sampling, top_p, top_k, num_beams, temperature, num_return_images,
-                    length_penalty, max_length, min_length, guidance_scale_for_llm, uncond_input_ids, is_token_prompt=True,
+                    length_penalty, max_length, min_length, guidance_scale_for_motion, uncond_input_ids, is_token_prompt=True,
                 )
 
             prompts = output_tokens    # The motion tokens already have image tokens + motion tokens
