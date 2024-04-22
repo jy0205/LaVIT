@@ -601,7 +601,7 @@ class VideoLaVITforGeneration(nn.Module):
                     length_penalty, max_length, min_length, guidance_scale_for_llm, uncond_input_ids, is_token_prompt=is_tokens,
                 )
                 output_tokens, pure_motion_tokens = self.generate_motion_tokenids(
-                    output_tokens, use_nucleus_sampling, top_p, top_k, num_beams, temperature, num_return_images,
+                    output_tokens, False, top_p, top_k, num_beams, temperature, num_return_images,
                     length_penalty, max_length, min_length, guidance_scale_for_llm, uncond_input_ids, is_token_prompt=True,
                 )
             else:
