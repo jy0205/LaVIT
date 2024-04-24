@@ -25,3 +25,4 @@ torchmetrics
 tiktoken
 jsonlines
 motion-vector-extractor
+xformers==0.0.19
