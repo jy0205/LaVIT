@@ -11,19 +11,10 @@ from timm.models.layers import drop_path, to_2tuple, trunc_normal_
 from models.modeling_visual_encoder import build_eva_clip
 
 
-class LayerNorm(nn.LayerNorm):
-    """Subclass torch's LayerNorm to handle fp16."""
-
-    def forward(self, x: torch.Tensor):
-        orig_type = x.dtype
-        ret = super().forward(x.type(torch.float32))
-        return ret.type(orig_type)
-
-
 try:
     from apex.normalization import FusedLayerNorm
 except:
-    FusedLayerNorm = LayerNorm
+    FusedLayerNorm = nn.LayerNorm
 
 
 class Mlp(nn.Module):
