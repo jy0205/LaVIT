@@ -451,7 +451,7 @@ images[0].save("output/i2t_output.jpg")
 
 ## Evaluation
 
-We provide the zero-shot evaluation with multiple GPUs on the adopted multi-modal benchmarks for reproductivity. You can refer to the scripts in the `scripts` folder for detailed usage. For convenience, you can download the annotations from [here](https://disk.pku.edu.cn/link/AAA7F33EBBF85740F69726EB922CBC02A9), which also provides the evaluation dataset structure. Before evaluation, you need to download the images from the official dataset websites to the corresponding directory in the `data/*/images` folder.
+We provide the zero-shot evaluation with multiple GPUs on the adopted multi-modal benchmarks for reproductivity. You can refer to the scripts in the `scripts` folder for detailed usage. For convenience, you can download the annotations from [here](https://disk.pku.edu.cn/link/AAB1235C308C8D43BE86F1D4AA85B58853), which also provides the evaluation dataset structure. Before evaluation, you need to download the images from the official dataset websites to the corresponding directory in the `data/*/images` folder.
 
 
 ## Acknowledgement
