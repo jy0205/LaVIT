@@ -171,7 +171,7 @@ class LaVITEvalVideoProcessor:
             clip_motions = [torch.from_numpy(motions[i].transpose((2,0,1))) for i in frame_indices]
             clip_motions = torch.stack(clip_motions).float()
             if clip_motions.shape[0] < self.max_frames:
-                pad_clip_motions = torch.ones((self.max_frames, 2, h, w)) *  -10000
+                pad_clip_motions = torch.ones((self.max_frames, 2, clip_motions.shape[-2], clip_motions.shape[-1])) *  -10000
                 pad_clip_motions[:len(clip_motions)] = clip_motions
                 clip_motions = pad_clip_motions
             video_motion_sequences.append(clip_motions)
