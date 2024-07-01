@@ -569,7 +569,7 @@ def _build_vision_tower(
     act_layer = QuickGELU if quick_gelu else nn.GELU
     
     vision_heads = vision_cfg.width // vision_cfg.head_width
-    norm_layer = LayerNorm
+    norm_layer = nn.LayerNorm
         
     visual = EVAVisionTransformer(
         img_size=vision_cfg.image_size,
