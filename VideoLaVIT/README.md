@@ -1,4 +1,4 @@
-# Video-LaVIT: Unified Video-Language Pre-training with Decoupled Visual-Motional Tokenization
+# ICML 2024 Oral: Video-LaVIT: Unified Video-Language Pre-training with Decoupled Visual-Motional Tokenization
 
 [[`arXiv`](https://arxiv.org/abs/2402.03161)] [[`Project`](https://video-lavit.github.io)] [[`BibTeX`](#Citing)]
 
@@ -124,7 +124,7 @@ snapshot_download("rain1011/Video-LaVIT-v1", local_dir=model_path, local_dir_use
 
   ```python
   from huggingface_hub import hf_hub_download
-
+  
   model_path = 'PATH'   # The local directory to save playground v2 checkpoint
   snapshot_download("playgroundai/playground-v2-1024px-aesthetic", local_dir=model_path, local_dir_use_symlinks=False, repo_type='model')
   ```
@@ -154,9 +154,10 @@ We are grateful for the following awesome projects when implementing LaVIT:
 Consider giving this repository a star and cite Video-LaVIT in your publications if it helps your research.
 
 ```
-@article{jin2024video,
+@inproceedings{jin2024video,
   title={Video-LaVIT: Unified Video-Language Pre-training with Decoupled Visual-Motional Tokenization},
-  author={Jin, Yang and Sun, Zhicheng and Xu, Kun and Chen, Liwei and Jiang, Hao and Huang, Quzhe and Song, Chengru and Liu, Yuliang and Zhang, Di and Song, Yang and others},
-  journal={arXiv preprint arXiv:2402.03161},
+  author={Jin, Yang and Sun, Zhicheng and Xu, Kun and Chen, Liwei and Jiang, Hao and Huang, Quzhe and Song, Chengru and Liu, Yuliang and Zhang, Di and Song, Yang and Gai, Kun and Mu, Yadong},
+  booktitle={International Conference on Machine Learning},
+  pages={22185--22209},
   year={2024}
 }

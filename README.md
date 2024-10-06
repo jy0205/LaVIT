@@ -4,11 +4,13 @@ This is the official repository for the multi-modal large language models: **LaV
 
 * Unified Language-Vision Pretraining in LLM with Dynamic Discrete Visual Tokenization, ICLR 2024, [[`arXiv`](https://arxiv.org/abs/2309.04669)] [[`BibTeX`](#Citing)]
 
-* Video-LaVIT: Unified Video-Language Pre-training with Decoupled Visual-Motional Tokenization, [[`arXiv`](https://arxiv.org/abs/2402.03161)] [[`Project`](https://video-lavit.github.io)] [[`BibTeX`](#Citing)]
+* Video-LaVIT: Unified Video-Language Pre-training with Decoupled Visual-Motional Tokenization, ICML 2024 Oral, [[`arXiv`](https://arxiv.org/abs/2402.03161)] [[`Project`](https://video-lavit.github.io)] [[`BibTeX`](#Citing)]
 
 
 
 ## News and Updates
+
+* ```2024.06.01``` 👏👏👏 Video-LaVIT has been accepted by ICML 2024 as an Oral presentation!
 
 * ```2024.04.21``` 🚀🚀🚀 We have released the pre-trained weight for **Video-LaVIT** on the HuggingFace and provide the inference code.
 
@@ -49,16 +51,17 @@ After pre-training, LaVIT and Video-LaVIT can support
 Consider giving this repository a star and cite LaVIT in your publications if it helps your research.
 
 ```
-@article{jin2023unified,
+@inproceedings{jin2024unified,
   title={Unified Language-Vision Pretraining in LLM with Dynamic Discrete Visual Tokenization},
   author={Jin, Yang and Xu, Kun and Xu, Kun and Chen, Liwei and Liao, Chao and Tan, Jianchao and Mu, Yadong and others},
-  journal={arXiv preprint arXiv:2309.04669},
-  year={2023}
+  booktitle={International Conference on Learning Representations},
+  year={2024}
 }
 
-@article{jin2024video,
+@inproceedings{jin2024video,
   title={Video-LaVIT: Unified Video-Language Pre-training with Decoupled Visual-Motional Tokenization},
-  author={Jin, Yang and Sun, Zhicheng and Xu, Kun and Chen, Liwei and Jiang, Hao and Huang, Quzhe and Song, Chengru and Liu, Yuliang and Zhang, Di and Song, Yang and others},
-  journal={arXiv preprint arXiv:2402.03161},
+  author={Jin, Yang and Sun, Zhicheng and Xu, Kun and Chen, Liwei and Jiang, Hao and Huang, Quzhe and Song, Chengru and Liu, Yuliang and Zhang, Di and Song, Yang and Gai, Kun and Mu, Yadong},
+  booktitle={International Conference on Machine Learning},
+  pages={22185--22209},
   year={2024}
 }

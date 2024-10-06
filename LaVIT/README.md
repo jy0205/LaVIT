@@ -467,9 +467,9 @@ We are grateful for the following awesome projects when implementing LaVIT:
 Consider giving this repository a star and cite LaVIT in your publications if it helps your research.
 
 ```
-@article{jin2023unified,
+@inproceedings{jin2024unified,
   title={Unified Language-Vision Pretraining in LLM with Dynamic Discrete Visual Tokenization},
   author={Jin, Yang and Xu, Kun and Xu, Kun and Chen, Liwei and Liao, Chao and Tan, Jianchao and Mu, Yadong and others},
-  journal={arXiv preprint arXiv:2309.04669},
-  year={2023}
+  booktitle={International Conference on Learning Representations},
+  year={2024}
 }
